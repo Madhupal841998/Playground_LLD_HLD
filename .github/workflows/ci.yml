@@ -1,0 +1,33 @@
+
+name: HTML CI Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  validate:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check HTML file
+        run: |
+          test -s index.html
+          echo "index.html exists"
+
+      - name: Check HTML doctype
+        run: |
+          grep -qi "<!DOCTYPE html>" index.html
+          echo "HTML doctype validated"
+
+      - name: CI Success
+        run: echo "All checks passed!"
